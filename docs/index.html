@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Menu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1 class="title">🍴 Welcome to Our Event Menu</h1>
+
+    <div class="home-buttons">
+        <a href="food.html" class="home-btn">FOOD</a>
+        <a href="drinks.html" class="home-btn">DRINKS</a>
+    </div>
+
+    <div style="text-align:center; margin-top:50px;">
+        <h2>LIKEMINDS HOTEL MENU</h2>
+        <canvas id="qrcode"></canvas>
+        <p>Scan to view our menu!</p>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+<script>
+  const menuURL = "https://tobicodesfx.github.io/LIKEMIND-MENU/";
+  QRCode.toCanvas(document.getElementById('qrcode'), menuURL, { width: 200 }, function (error) {
+    if (error) console.error(error);
+    else console.log('QR code generated!');
+  });
+</script>
+
+</body>
+</html>
