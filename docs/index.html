@@ -4,29 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LIKEMINDS HOTEL MENU</title>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode.js@1.0.0/qrcode.min.js"></script>
     <style>
         body {margin:0; font-family:Arial; background:#f9f9f9; text-align:center; padding:50px 20px;}
-        h1 {font-size:2.8em; color:#222;}
-        #qrcode {margin:40px auto;}
-        p {font-size:1.3em; color:#444;}
-        small {color:#777;}
+        h1 {font-size:2.8em; color:#222; margin-bottom:20px;}
+        img {width:340px; height:340px; border:5px solid #333; border-radius:12px; margin:40px auto; display:block;}
+        p {font-size:1.3em; color:#444; margin:20px 0;}
+        small {color:#777; font-size:1em;}
     </style>
 </head>
 <body>
     <h1>LIKEMINDS HOTEL MENU</h1>
-    <div id="qrcode"></div>
+    
+    <img src="https://quickchart.io/qr?text=https%3A%2F%2Ftobicodesfx.github.io%2FLIKEMIND-MENU%2F&size=300" alt="Scan to view menu">
+    
     <p>Scan with any phone to see food & drinks + prices</p>
     <small>No hidden charges • Same price every time</small>
-
-    <script>
-        new QRCode(document.getElementById("qrcode"), {
-            text: "https://tobicodesfx.github.io/LIKEMIND-MENU/",
-            width: 340,
-            height: 340,
-            colorDark: "#000",
-            colorLight: "#fff"
-        });
-    </script>
 </body>
 </html>
