@@ -3,33 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Likeminds Hotel Menu</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Load QR library FIRST -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <title>LIKEMINDS HOTEL MENU</title>
+    <style>
+        body {margin:0; font-family:Arial; background:#f9f9f9; text-align:center; padding:50px 20px;}
+        h1 {font-size:2.8em; color:#222; margin-bottom:20px;}
+        img {width:320px; height:320px; border:5px solid #333; border-radius:12px; margin:30px auto; display:block;}
+        p {font-size:1.3em; color:#444; margin:20px 0;}
+        small {color:#777; font-size:1em;}
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1 class="title">LIKEMINDS HOTEL MENU</h1>
-        <div style="text-align:center; margin:40px 0;">
-            <canvas id="qrcode"></canvas>
-        </div>
-        <p style="text-align:center; font-size:18px;">Scan with any phone to see food & drinks + prices</p>
-        <p style="text-align:center; font-style:italic; color:#666;">No hidden charges · Same price every time</p>
-    </div>
-
-    <script>
-        // This runs only after the library above is loaded
-        const menuURL = "https://tobicodesfx.github.io/LIKEMIND-MENU/menu.html";
-        QRCode.toCanvas(document.getElementById('qrcode'), menuURL, {
-            width: 280,
-            height: 280,
-            colorDark: "#000000",
-            colorLight: "#FFFFFF"
-        }, function (error) {
-            if (error) console.error(error);
-            else console.log("QR code is back baby!");
-        });
-    </script>
+    <h1>LIKEMINDS HOTEL MENU</h1>
+    
+    <img src="frame.png" alt="Scan to view menu">
+    
+    <p>Scan with any phone to see food & drinks + prices</p>
+    <small>No hidden charges • Same price every time</small>
 </body>
 </html>
