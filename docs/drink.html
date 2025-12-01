@@ -6,93 +6,130 @@
     <title>Drinks Menu - Likeminds Hotel Garden</title>
     <style>
         body { margin:0; font-family:Arial,sans-serif; background:#f5e6d3; color:#222; padding:20px 0; }
-        .container { max-width:420px; margin:0 auto; padding-bottom:100px; }
-        h1 { text-align:center; color:#1a5f1a; font-size:2.3em; margin:20px 0; }
-        .note { text-align:center; font-size:1.1em; color:#1a5f1a; margin-bottom:20px; font-weight:bold; }
+        .container { max-width:420px; margin:0 auto; padding-bottom:100px; position:relative; }
+        h1 { text-align:center; color:#1a5f1a; font-size:2.4em; margin:20px 0; }
+        .search-container { text-align:center; margin:20px 0; }
+        #searchInput { width:90%; padding:16px; font-size:1.3em; border-radius:50px; border:2px solid #1a5f1a; text-align:center; }
+        .note { text-align:center; font-size:1.2em; color:#1a5f1a; margin:15px 0; font-weight:bold; }
         .category { margin:40px 0; }
         .category h2 { background:#1a5f1a; color:white; padding:14px; border-radius:12px; text-align:center; font-size:1.5em; }
-        .drink { background:white; margin:12px 8px; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
-        .drink h3 { background:#1a5f1a; color:white; padding:14px; margin:0; text-align:center; font-size:1.3em; }
+        .drink { background:white; margin:15px 10px; border-radius:15px; overflow:hidden; box-shadow:0 6px 15px rgba(0,0,0,0.15); display:none; }
+        .drink.show { display:block; }
+        .drink h3 { background:#1a5f1a; color:white; padding:16px; margin:0; text-align:center; font-size:1.4em; }
         table { width:100%; border-collapse:collapse; }
-        th, td { padding:14px; text-align:center; font-size:1.2em; }
+        th, td { padding:16px; text-align:center; font-size:1.3em; }
         th { background:#e8f5e8; color:#1a5f1a; font-weight:bold; }
         .bar { background:#f9f9f9; }
         .vip { background:#d4edda; font-weight:bold; color:#155724; }
-        .back-btn { display:block; margin:50px auto; padding:16px 50px; background:#1a5f1a; color:white; text-align:center; text-decoration:none; border-radius:50px; font-weight:bold; font-size:1.3em; width:fit-content; }
+        .no-results { text-align:center; color:#d00; font-size:1.4em; margin:40px; display:none; }
+        .back-btn, .top-btn { display:block; margin:30px auto; padding:16px 50px; background:#1a5f1a; color:white; text-align:center; text-decoration:none; border-radius:50px; font-weight:bold; font-size:1.3em; width:fit-content; }
+        .top-btn { position:fixed; bottom:20px; right:20px; padding:15px 20px; border-radius:50%; display:none; }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>DRINKS MENU</h1>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="🔍 Search drink (e.g. Heineken, Martel...)" autocomplete="off">
+    </div>
     <p class="note">BAR PRICE vs VIP PRICE</p>
+    <p class="no-results" id="noResults">Currently Unavailable</p>
 
     <!-- SOFT DRINKS & WATER -->
     <div class="category">
         <h2>SOFT DRINKS & WATER</h2>
-        <div class="drink"><h3>Bottle Water</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦500</td><td class="vip">₦500</td></tr></table></div>
-        <div class="drink"><h3>Coca-Cola</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,000</td><td class="vip">₦1,000</td></tr></table></div>
-        <div class="drink"><h3>Fayrouz</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,000</td><td class="vip">₦1,000</td></tr></table></div>
-        <div class="drink"><h3>Malta Guinness</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,000</td><td class="vip">₦1,000</td></tr></table></div>
-        <div class="drink"><h3>Maltina</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,000</td><td class="vip">₦1,000</td></tr></table></div>
-        <div class="drink"><h3>Jekonmo</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,000</td><td class="vip">₦1,200</td></tr></table></div>
-        <div class="drink"><h3>Coco Samba</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,000</td><td class="vip">₦1,000</td></tr></table></div>
-        <div class="drink"><h3>Climax</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,500</td><td class="vip">₦1,500</td></tr></table></div>
+        <div class="drink show" data-name="bottle water"><h3>Bottle Water</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦500</td><td class="vip">₦500</td></tr></table></div>
+        <div class="drink show" data-name="coca cola coca-cola coke"><h3>Coca-Cola</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,000</td><td class="vip">₦1,000</td></tr></table></div>
+        <div class="drink show" data-name="fayrouz"><h3>Fayrouz</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,000</td><td class="vip">₦1,000</td></tr></table></div>
+        <div class="drink show" data-name="malta guinness malta"><h3>Malta Guinness</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,000</td><td class="vip">₦1,000</td></tr></table></div>
+        <div class="drink show" data-name="maltina"><h3>Maltina</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,000</td><td class="vip">₦1,000</td></tr></table></div>
+        <div class="drink show" data-name="jekonmo"><h3>Jekonmo</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,000</td><td class="vip">₦1,200</td></tr></table></div>
+        <div class="drink show" data-name="coco samba"><h3>Coco Samba</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,000</td><td class="vip">₦1,000</td></tr></table></div>
+        <div class="drink show" data-name="climax"><h3>Climax</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,500</td><td class="vip">₦1,500</td></tr></table></div>
     </div>
 
     <!-- BEERS & STOUTS -->
     <div class="category">
         <h2>BEERS & STOUTS</h2>
-        <div class="drink"><h3>Heineken</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,000</td></tr></table></div>
-        <div class="drink"><h3>Budweiser</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,000</td></tr></table></div>
-        <div class="drink"><h3>Big Stout</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,000</td></tr></table></div>
-        <div class="drink"><h3>Big Origin</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,000</td></tr></table></div>
-        <div class="drink"><h3>Trophy</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,200</td><td class="vip">₦1,200</td></tr></table></div>
-        <div class="drink"><h3>Gulder</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,500</td><td class="vip">₦1,500</td></tr></table></div>
-        <div class="drink"><h3>Goldberg</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,200</td><td class="vip">₦1,200</td></tr></table></div>
-        <div class="drink"><h3>33 Export</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,200</td><td class="vip">₦1,200</td></tr></table></div>
-        <div class="drink"><h3>M Stout</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,500</td><td class="vip">₦1,500</td></tr></table></div>
-        <div class="drink"><h3>Flying Fish</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,200</td><td class="vip">₦1,200</td></tr></table></div>
-        <div class="drink"><h3>Raddler</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,200</td><td class="vip">₦1,200</td></tr></table></div>
-        <div class="drink"><h3>Tiger</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,200</td><td class="vip">₦1,200</td></tr></table></div>
-        <div class="drink"><h3>Desperado</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,500</td><td class="vip">₦1,500</td></tr></table></div>
-        <div class="drink"><h3>Pet Origin</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,000</td></tr></table></div>
-        <div class="drink"><h3>Castle Lite</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,200</td><td class="vip">₦1,200</td></tr></table></div>
+        <div class="drink show" data-name="heineken"><h3>Heineken</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,000</td></tr></table></div>
+        <div class="drink show" data-name="budweiser"><h3>Budweiser</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,000</td></tr></table></div>
+        <div class="drink show" data-name="big stout"><h3>Big Stout</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,000</td></tr></table></div>
+        <div class="drink show" data-name="big origin origin"><h3>Big Origin</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,000</td></tr></table></div>
+        <div class="drink show" data-name="trophy"><h3>Trophy</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,200</td><td class="vip">₦1,200</td></tr></table></div>
+        <div class="drink show" data-name="gulder"><h3>Gulder</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,500</td><td class="vip">₦1,500</td></tr></table></div>
+        <div class="drink show" data-name="goldberg"><h3>Goldberg</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,200</td><td class="vip">₦1,200</td></tr></table></div>
+        <div class="drink show" data-name="33 export"><h3>33 Export</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,200</td><td class="vip">₦1,200</td></tr></table></div>
+        <div class="drink show" data-name="m stout"><h3>M Stout</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,500</td><td class="vip">₦1,500</td></tr></table></div>
+        <div class="drink show" data-name="flying fish"><h3>Flying Fish</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,200</td><td class="vip">₦1,200</td></tr></table></div>
+        <div class="drink show" data-name="raddler"><h3>Raddler</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,200</td><td class="vip">₦1,200</td></tr></table></div>
+        <div class="drink show" data-name="tiger"><h3>Tiger</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,200</td><td class="vip">₦1,200</td></tr></table></div>
+        <div class="drink show" data-name="desperado"><h3>Desperado</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,500</td><td class="vip">₦1,500</td></tr></table></div>
+        <div class="drink show" data-name="pet origin"><h3>Pet Origin</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,000</td></tr></table></div>
+        <div class="drink show" data-name="castle lite"><h3>Castle Lite</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,200</td><td class="vip">₦1,200</td></tr></table></div>
     </div>
 
     <!-- SPIRITS & PREMIUM -->
     <div class="category">
         <h2>SPIRITS & PREMIUM</h2>
-        <div class="drink"><h3>Martel</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦50,000</td><td class="vip">₦50,000</td></tr></table></div>
-        <div class="drink"><h3>Jameson</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦30,000</td><td class="vip">₦30,000</td></tr></table></div>
-        <div class="drink"><h3>Red Label</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦20,000</td><td class="vip">₦20,000</td></tr></table></div>
-        <div class="drink"><h3>Andre</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦15,000</td><td class="vip">₦15,000</td></tr></table></div>
-        <div class="drink"><h3>J.B</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦6,000</td><td class="vip">₦6,000</td></tr></table></div>
-        <div class="drink"><h3>Origin Bitter</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦10,000</td><td class="vip">₦10,000</td></tr></table></div>
-        <div class="drink"><h3>Big Gordons</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦10,000</td><td class="vip">₦10,000</td></tr></table></div>
-        <div class="drink"><h3>Baileys</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦10,000</td><td class="vip">₦10,000</td></tr></table></div>
-        <div class="drink"><h3>Baron</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦6,000</td><td class="vip">₦7,000</td></tr></table></div>
-        <div class="drink"><h3>Best Cream</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦3,000</td><td class="vip">₦3,500</td></tr></table></div>
-        <div class="drink"><h3>Hollandia / Juice</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦3,000</td><td class="vip">₦3,000</td></tr></table></div>
-        <div class="drink"><h3>Seagrams</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,500</td></tr></table></div>
-        <div class="drink"><h3>Vodka X1</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦5,000</td><td class="vip">₦5,000</td></tr></table></div>
-        <div class="drink"><h3>Campari</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦8,000</td><td class="vip">₦8,000</td></tr></table></div>
-        <div class="drink"><h3>Gordons</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦5,000</td><td class="vip">₦5,000</td></tr></table></div>
-        <div class="drink"><h3>Bullets</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,500</td></tr></table></div>
-        <div class="drink"><h3>Power Horse</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,500</td></tr></table></div>
-        <div class="drink"><h3>4 Cousins</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦15,000</td><td class="vip">₦15,000</td></tr></table></div>
-        <div class="drink"><h3>Big Seagram</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦10,000</td><td class="vip">₦10,000</td></tr></table></div>
-        <div class="drink"><h3>T/Stout</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,200</td><td class="vip">₦1,200</td></tr></table></div>
-        <div class="drink"><h3>Long Jack</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,500</td><td class="vip">₦1,500</td></tr></table></div>
-        <div class="drink"><h3>Bavhiskey</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,500</td><td class="vip">₦3,000</td></tr></table></div>
-        <div class="drink"><h3>Black Barrel</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦40,000</td><td class="vip">₦40,000</td></tr></table></div>
-        <div class="drink"><h3>Mr Cream</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,000</td></tr></table></div>
-        <div class="drink"><h3>Lawson</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦18,000</td><td class="vip">₦18,000</td></tr></table></div>
-        <div class="drink"><h3>Big Best</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦10,000</td><td class="vip">₦10,000</td></tr></table></div>
-        <div class="drink"><h3>D’General</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,500</td><td class="vip">₦1,500</td></tr></table></div>
-        <div class="drink"><h3>Tequila</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦30,000</td><td class="vip">₦30,000</td></tr></table></div>
+        <div class="drink show" data-name="martel"><h3>Martel</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦50,000</td><td class="vip">₦50,000</td></tr></table></div>
+        <div class="drink show" data-name="jameson"><h3>Jameson</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦30,000</td><td class="vip">₦30,000</td></tr></table></div>
+        <div class="drink show" data-name="red label"><h3>Red Label</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦20,000</td><td class="vip">₦20,000</td></tr></table></div>
+        <div class="drink show" data-name="andre"><h3>Andre</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦15,000</td><td class="vip">₦15,000</td></tr></table></div>
+        <div class="drink show" data-name="jb j.b"><h3>J.B</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦6,000</td><td class="vip">₦6,000</td></tr></table></div>
+        <div class="drink show" data-name="origin bitter"><h3>Origin Bitter</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦10,000</td><td class="vip">₦10,000</td></tr></table></div>
+        <div class="drink show" data-name="big gordons"><h3>Big Gordons</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦10,000</td><td class="vip">₦10,000</td></tr></table></div>
+        <div class="drink show" data-name="baileys"><h3>Baileys</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦10,000</td><td class="vip">₦10,000</td></tr></table></div>
+        <div class="drink show" data-name="baron"><h3>Baron</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦6,000</td><td class="vip">₦7,000</td></tr></table></div>
+        <div class="drink show" data-name="best cream"><h3>Best Cream</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦3,000</td><td class="vip">₦3,500</td></tr></table></div>
+        <div class="drink show" data-name="hollandia juice"><h3>Hollandia / Juice</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦3,000</td><td class="vip">₦3,000</td></tr></table></div>
+        <div class="drink show" data-name="seagrams"><h3>Seagrams</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,500</td></tr></table></div>
+        <div class="drink show" data-name="vodka x1"><h3>Vodka X1</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦5,000</td><td class="vip">₦5,000</td></tr></table></div>
+        <div class="drink show" data-name="campari"><h3>Campari</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦8,000</td><td class="vip">₦8,000</td></tr></table></div>
+        <div class="drink show" data-name="gordons"><h3>Gordons</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦5,000</td><td class="vip">₦5,000</td></tr></table></div>
+        <div class="drink show" data-name="bullets"><h3>Bullets</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,500</td></tr></table></div>
+        <div class="drink show" data-name="power horse"><h3>Power Horse</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,500</td></tr></table></div>
+        <div class="drink show" data-name="4 cousins"><h3>4 Cousins</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦15,000</td><td class="vip">₦15,000</td></tr></table></div>
+        <div class="drink show" data-name="big seagram"><h3>Big Seagram</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦10,000</td><td class="vip">₦10,000</td></tr></table></div>
+        <div class="drink show" data-name="long jack"><h3>Long Jack</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,500</td><td class="vip">₦1,500</td></tr></table></div>
+        <div class="drink show" data-name="bavhiskey"><h3>Bavhiskey</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,500</td><td class="vip">₦3,000</td></tr></table></div>
+        <div class="drink show" data-name="black barrel"><h3>Black Barrel</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦40,000</td><td class="vip">₦40,000</td></tr></table></div>
+        <div class="drink show" data-name="mr cream"><h3>Mr Cream</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦2,000</td><td class="vip">₦2,000</td></tr></table></div>
+        <div class="drink show" data-name="lawson"><h3>Lawson</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦18,000</td><td class="vip">₦18,000</td></tr></table></div>
+        <div class="drink show" data-name="big best"><h3>Big Best</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦10,000</td><td class="vip">₦10,000</td></tr></table></div>
+        <div class="drink show" data-name="d general dgeneral"><h3>D’General</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦1,500</td><td class="vip">₦1,500</td></tr></table></div>
+        <div class="drink show" data-name="tequila"><h3>Tequila</h3><table><tr><th>Bar</th><th>VIP</th></tr><tr><td class="bar">₦30,000</td><td class="vip">₦30,000</td></tr></table></div>
     </div>
 
     <a href="index.html" class="back-btn">← Back to Main Menu</a>
+    <a href="#" class="top-btn">↑</a>
 </div>
+
+<script>
+    const searchInput = document.getElementById('searchInput');
+    const drinks = document.querySelectorAll('.drink');
+    const noResults = document.getElementById('noResults');
+
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase().trim();
+        let found = false;
+
+        drinks.forEach(drink => {
+            const name = drink.getAttribute('data-name');
+            if (name.includes(query)) {
+                drink.classList.add('show');
+                found = true;
+            } else {
+                drink.classList.remove('show');
+            }
+        });
+
+        noResults.style.display = found || query === '' ? 'none' : 'block';
+    });
+
+    // Back to top button
+    window.onscroll = () => {
+        document.querySelector('.top-btn').style.display = window.scrollY > 300 ? 'block' : 'none';
+    };
+</script>
 </body>
 </html>
